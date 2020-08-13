@@ -8,6 +8,8 @@ github.com/mattn/go-runewidth v0.0.9 h1:Lm995f3rfxdpd6TSmuVCHVb/QhupuXlYr8sCI/Qd
 github.com/mattn/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
 github.com/wedaly/go-runewidth v0.0.9 h1:uvJUXx6zsWQAhjJhK6PLuDDQfkloA/Cad0ESOeDLYR8=
 github.com/wedaly/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
+github.com/wedaly/go-runewidth v0.0.10-0.20200813152930-acebcb1c8df1 h1:3ZP8TP4rX/pkLf4yXanNT1zdC7JzUgMdcuahxxmrhsw=
+github.com/wedaly/go-runewidth v0.0.10-0.20200813152930-acebcb1c8df1/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
 golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756 h1:9nuHUbU8dRnRRfj9KjWUVrJeoexdbeMjttk6Oh1rD10=
 golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=

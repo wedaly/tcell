@@ -10,4 +10,4 @@ require (
 	golang.org/x/text v0.3.0
 )
 
-replace github.com/mattn/go-runewidth => github.com/wedaly/go-runewidth v0.0.9
+replace github.com/mattn/go-runewidth => github.com/wedaly/go-runewidth v0.0.10-0.20200813152930-acebcb1c8df1
