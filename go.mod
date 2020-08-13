@@ -9,3 +9,5 @@ require (
 	golang.org/x/sys v0.0.0-20190626150813-e07cf5db2756
 	golang.org/x/text v0.3.0
 )
+
+replace github.com/mattn/go-runewidth => github.com/wedaly/go-runewidth v0.0.9
