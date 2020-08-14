@@ -4,6 +4,24 @@ import (
 	"github.com/gdamore/tcell"
 )
 
+type State struct {
+	offset int
+}
+
+func (s *State) MoveUp() {
+	s.offset--
+	if s.offset < 0 {
+		s.offset = 0
+	}
+}
+
+func (s *State) MoveDown() {
+	s.offset++
+	if s.offset > 10 {
+		s.offset = 10
+	}
+}
+
 func main() {
 	screen, err := tcell.NewScreen()
 	if err != nil {
@@ -17,14 +35,15 @@ func main() {
 	}
 
 	quit := make(chan struct{})
+	state := State{offset: 0}
 
 	go func() {
-		drawAndShow(screen)
+		drawAndShow(screen, &state)
 		for {
 			event := screen.PollEvent()
 			switch event := event.(type) {
 			case *tcell.EventKey:
-				handleKey(event, screen, quit)
+				handleKey(event, screen, &state, quit)
 
 			case *tcell.EventResize:
 				screen.Sync()
@@ -35,7 +54,7 @@ func main() {
 	<-quit
 }
 
-func handleKey(event *tcell.EventKey, screen tcell.Screen, quit chan struct{}) {
+func handleKey(event *tcell.EventKey, screen tcell.Screen, state *State, quit chan struct{}) {
 	switch event.Key() {
 	case tcell.KeyEscape, tcell.KeyCtrlC:
 		close(quit)
@@ -43,9 +62,18 @@ func handleKey(event *tcell.EventKey, screen tcell.Screen, quit chan struct{}) {
 	case tcell.KeyCtrlL:
 		screen.Sync()
 	case tcell.KeyEnter:
-		drawAndShow(screen)
+		drawAndShow(screen, state)
+	case tcell.KeyDown:
+		state.MoveDown()
+		drawAndShow(screen, state)
+	case tcell.KeyUp:
+		state.MoveUp()
+		drawAndShow(screen, state)
 	}
 }
 
-func drawAndShow(screen tcell.Screen) {
+func drawAndShow(screen tcell.Screen, state *State) {
+	screen.Clear()
+	screen.SetContent(0, state.offset, 'a', nil, tcell.StyleDefault)
+	screen.Show()
 }
