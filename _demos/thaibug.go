@@ -5,21 +5,23 @@ import (
 )
 
 type State struct {
-	offset int
+	x, y int
+}
+
+func (s *State) MoveLeft() {
+	s.x--
+}
+
+func (s *State) MoveRight() {
+	s.x++
 }
 
 func (s *State) MoveUp() {
-	s.offset--
-	if s.offset < 0 {
-		s.offset = 0
-	}
+	s.y--
 }
 
 func (s *State) MoveDown() {
-	s.offset++
-	if s.offset > 10 {
-		s.offset = 10
-	}
+	s.y++
 }
 
 func main() {
@@ -35,7 +37,7 @@ func main() {
 	}
 
 	quit := make(chan struct{})
-	state := State{offset: 0}
+	state := State{}
 
 	go func() {
 		drawAndShow(screen, &state)
@@ -61,15 +63,16 @@ func handleKey(event *tcell.EventKey, screen tcell.Screen, state *State, quit ch
 		return
 	case tcell.KeyCtrlL:
 		screen.Sync()
-	case tcell.KeyEnter:
-		drawAndShow(screen, state)
+	case tcell.KeyLeft:
+		state.MoveLeft()
+	case tcell.KeyRight:
+		state.MoveRight()
 	case tcell.KeyDown:
 		state.MoveDown()
-		drawAndShow(screen, state)
 	case tcell.KeyUp:
 		state.MoveUp()
-		drawAndShow(screen, state)
 	}
+	drawAndShow(screen, state)
 }
 
 func drawAndShow(screen tcell.Screen, state *State) {
@@ -90,7 +93,9 @@ func drawAndShow(screen tcell.Screen, state *State) {
 
 	screen.Clear()
 	for i, cellRunes := range content {
-		screen.SetContent(i, state.offset, cellRunes[0], cellRunes[1:], tcell.StyleDefault)
+		x := state.x + i
+		y := state.y
+		screen.SetContent(x, y, cellRunes[0], cellRunes[1:], tcell.StyleDefault)
 	}
 	screen.Show()
 }
