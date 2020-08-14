@@ -73,7 +73,24 @@ func handleKey(event *tcell.EventKey, screen tcell.Screen, state *State, quit ch
 }
 
 func drawAndShow(screen tcell.Screen, state *State) {
+	content := [][]rune{
+		{3588, 3657, 3635},
+		{3594, 3641},
+		{3585, 3641, 3657},
+		{3610},
+		{3619},
+		{3619},
+		{3621, 3633},
+		{3591},
+		{3585, 3660},
+		{32},
+		{3631},
+		{10},
+	}
+
 	screen.Clear()
-	screen.SetContent(0, state.offset, 'a', nil, tcell.StyleDefault)
+	for i, cellRunes := range content {
+		screen.SetContent(i, state.offset, cellRunes[0], cellRunes[1:], tcell.StyleDefault)
+	}
 	screen.Show()
 }
