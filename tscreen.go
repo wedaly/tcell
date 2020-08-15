@@ -29,6 +29,8 @@ import (
 
 	// import the stock terminals
 	_ "github.com/gdamore/tcell/terminfo/base"
+
+	runewidth "github.com/mattn/go-runewidth"
 )
 
 // NewTerminfoScreen returns a Screen that uses the stock TTY interface
@@ -440,9 +442,14 @@ func (t *tScreen) Fill(r rune, style Style) {
 }
 
 func (t *tScreen) SetContent(x, y int, mainc rune, combc []rune, style Style) {
+	width := runewidth.RuneWidth(mainc)
+	t.SetContentAndWidth(x, y, width, mainc, combc, style)
+}
+
+func (t *tScreen) SetContentAndWidth(x, y, width int, mainc rune, combc []rune, st Style) {
 	t.Lock()
 	if !t.fini {
-		t.cells.SetContent(x, y, mainc, combc, style)
+		t.cells.SetContent(x, y, width, mainc, combc, st)
 	}
 	t.Unlock()
 }

@@ -14,10 +14,6 @@
 
 package tcell
 
-import (
-	runewidth "github.com/mattn/go-runewidth"
-)
-
 type cell struct {
 	currMain  rune
 	currComb  []rune
@@ -42,17 +38,14 @@ type CellBuffer struct {
 
 // SetContent sets the contents (primary rune, combining runes,
 // and style) for a cell at a given location.
-func (cb *CellBuffer) SetContent(x int, y int,
+func (cb *CellBuffer) SetContent(x int, y int, width int,
 	mainc rune, combc []rune, style Style) {
 
 	if x >= 0 && y >= 0 && x < cb.w && y < cb.h {
 		c := &cb.cells[(y*cb.w)+x]
 
 		c.currComb = append([]rune{}, combc...)
-
-		if c.currMain != mainc {
-			c.width = runewidth.RuneWidth(mainc)
-		}
+		c.width = width
 		c.currMain = mainc
 		c.currStyle = style
 	}

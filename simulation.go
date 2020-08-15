@@ -18,6 +18,7 @@ import (
 	"sync"
 	"unicode/utf8"
 
+	"github.com/mattn/go-runewidth"
 	"golang.org/x/text/transform"
 )
 
@@ -176,9 +177,13 @@ func (s *simscreen) SetCell(x, y int, style Style, ch ...rune) {
 }
 
 func (s *simscreen) SetContent(x, y int, mainc rune, combc []rune, st Style) {
+	width := runewidth.RuneWidth(mainc)
+	s.SetContentAndWidth(x, y, width, mainc, combc, st)
+}
 
+func (s *simscreen) SetContentAndWidth(x, y, width int, mainc rune, combc []rune, st Style) {
 	s.Lock()
-	s.back.SetContent(x, y, mainc, combc, st)
+	s.back.SetContent(x, y, width, mainc, combc, st)
 	s.Unlock()
 }
 

@@ -60,6 +60,13 @@ type Screen interface {
 	// last column will be replaced with a single width space on output.
 	SetContent(x int, y int, mainc rune, combc []rune, style Style)
 
+	// SetContentAndWidth sets the content and width of a given cell location.
+	// Width should be greater than or equal to zero.
+	// If width is greater than one, then the cell "covers" some cells
+	// to its right.  Attempts to set the content of the covered cells
+	// will have undefined effects.
+	SetContentAndWidth(x, y, width int, mainc rune, combc []rune, style Style)
+
 	// SetStyle sets the default style to use when clearing the screen
 	// or when StyleDefault is specified.  If it is also StyleDefault,
 	// then whatever system/terminal default is relevant will be used.

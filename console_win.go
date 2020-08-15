@@ -22,6 +22,8 @@ import (
 	"syscall"
 	"unicode/utf16"
 	"unsafe"
+
+	runewidth "github.com/mattn/go-runewidth"
 )
 
 type cScreen struct {
@@ -714,9 +716,14 @@ func (s *cScreen) SetCell(x, y int, style Style, ch ...rune) {
 }
 
 func (s *cScreen) SetContent(x, y int, mainc rune, combc []rune, style Style) {
+	width := runewidth.RuneWidth(mainc)
+	s.SetContentAndWidth(x, y, width, mainc, combc, style)
+}
+
+func (s *cScreen) SetContentAndWidth(x, y, width int, mainc rune, combc []rune, st Style) {
 	s.Lock()
 	if !s.fini {
-		s.cells.SetContent(x, y, mainc, combc, style)
+		s.cells.SetContent(x, y, mainc, width, combc, style)
 	}
 	s.Unlock()
 }
