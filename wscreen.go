@@ -54,7 +54,7 @@ type wScreen struct {
 }
 
 func (t *wScreen) Init() error {
-	t.w, t.h = 80, 24 // default for html as of now
+	t.w, t.h = 500, 500 // default for html as of now
 	t.evch = make(chan Event, 10)
 	t.quit = make(chan struct{})
 
