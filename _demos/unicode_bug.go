@@ -24,7 +24,11 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
-const unicodeStr = "😶‍🌫️ E13.1 face in clouds"
+// This is the "man with beard" emoji followed by " abcd"
+// U+1F468 is "man"
+// U+200D is zero-width joiner
+// U+1F9D4 is "bearded person"
+const unicodeStr = "\U0001F468\U0000200D\U0001F9D4 abcd"
 
 func draw(s tcell.Screen, col int, row int) {
 	s.Clear()
